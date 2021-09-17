@@ -48,9 +48,9 @@ defmodule SSHTunnel do
   def connect(opts \\ []) do
     host = Keyword.get(opts, :host, "127.0.0.1")
     port = Keyword.get(opts, :port, 22)
-    ssh_config = defaults(opts)
 
-    :ssh.connect(String.to_charlist(host), port, ssh_config)
+
+    :ssh.connect(String.to_charlist(host), port, opts)
   end
 
   @doc ~S"""
@@ -146,15 +146,4 @@ defmodule SSHTunnel do
     end
   end
 
-  defp defaults(opts) do
-    user = Keyword.get(opts, :user, "")
-    password = Keyword.get(opts, :password, "")
-
-    [
-      user_interaction: false,
-      silently_accept_hosts: true,
-      user: String.to_charlist(user),
-      password: String.to_charlist(password)
-    ]
-  end
 end
