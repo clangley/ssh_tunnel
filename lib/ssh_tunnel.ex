@@ -38,18 +38,14 @@ defmodule SSHTunnel do
 
   @type location :: {String.t(), integer()}
 
+  @spec connect(binary, any, any) :: any
   @doc """
   Create a connetion to a remote host with the provided options. This function is mostly used as
   convenience wrapper around `:ssh_connect/3` and does not support all options.
 
   returns: `{:ok, connection}` or `{:error, reason}`.
   """
-  @spec connect(Keyword.t()) :: {:ok, pid()} | {:error, term()}
-  def connect(opts \\ []) do
-    host = Keyword.get(opts, :host, "127.0.0.1")
-    port = Keyword.get(opts, :port, 22)
-
-
+  def connect(host, port, opts \\ []) do
     :ssh.connect(String.to_charlist(host), port, opts)
   end
 
